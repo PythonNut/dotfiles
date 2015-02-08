@@ -23,14 +23,12 @@ try:
 except: pass
 
 import collections as coll
-import functools   as ft
 
 numpy       = np
 scipy       = sp
 matplotlib  = mpl
 collections = coll
 inf         = infinity
-functools   = ft
 
 from functools import *
 from copy      import deepcopy
