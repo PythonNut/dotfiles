@@ -47,11 +47,11 @@ y, z, a, b, c, i, k, t = var("y,z,a,b,c,i,k,t")
 theta = var("theta")
 F, f, h, g = function("F,f,h,g")
 Y = function("Y", x)
-assume(x,"real")
-assume(y,"real")
-assume(z,"real")
-assume(i,"integer")
-assume(k,"integer")
+# assume(x,"real")
+# assume(y,"real")
+# assume(z,"real")
+# assume(i,"integer")
+# assume(k,"integer")
 
 def parsolve(tx,ty):
     import itertools as it
@@ -128,7 +128,7 @@ def inverse(f,x=None):
         return [expr.subs(y=x) for expr in g]
     except RuntimeError as e:
         return []
-    
+
 class Magic(object):
     """
     This is the magic SAGE class. It contains lots of functionality
