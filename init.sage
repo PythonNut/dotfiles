@@ -272,15 +272,6 @@ class Magic(object):
             return self.f(*args,**kwargs)
 
     # homebrew math functions
-    class Math(object):
-        @classmethod
-        def cis(self, theta):
-            return cos(theta) + I * sin(theta)
-
-        @classmethod
-        def proj(self, a, b):
-            return (b.dot(a)/S.norm(a)^2)*(a)
-
     def __init__(self):
         # shortcut tokens
         self.tokens = {
@@ -325,14 +316,14 @@ class Magic(object):
             ">mp" : "_maple_",
         }
 
+        self.mro = []
+
         # setup quick library access
         def _try_import(lst, module):
             try:
                 lst.append(__import__(module))
             except: pass
 
-        self.mro = [self.Math]
-        
         _try_import(self.mro,"numpy")
         _try_import(self.mro,"numpy.linalg")
         _try_import(self.mro,"scipy")
