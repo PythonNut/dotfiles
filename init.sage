@@ -129,6 +129,9 @@ def inverse(f,x=None):
     except RuntimeError as e:
         return []
 
+def cis(theta):
+  return cos(theta) + I * sin(theta)
+
 class Magic(object):
     """
     This is the magic SAGE class. It contains lots of functionality
