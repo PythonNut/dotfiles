@@ -1,0 +1,7 @@
+[user]
+	email = PythonNut@users.noreply.github.com
+	name = PythonNut
+[github]
+	user = PythonNut
+[credential]
+	helper = cache --timeout=3600
