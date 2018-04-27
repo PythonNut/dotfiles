@@ -11,3 +11,5 @@ set statusbar-bg "#002b36"
 set statusbar-fg "#93a1a1"
 
 map <C-w> quit
+map <C-=> zoom in
+map <C--> zoom out
