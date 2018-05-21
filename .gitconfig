@@ -3,5 +3,13 @@
 	name = PythonNut
 [github]
 	user = PythonNut
+[color]
+	ui = auto
 [credential]
-	helper = cache --timeout=3600
+	helper =
+	helper = cache --timeout 86400
+[diff]
+	mnemonicprefix = true
+	renames = copies
+[rerere]
+	enabled = true
