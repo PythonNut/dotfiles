@@ -11,5 +11,6 @@
 [diff]
 	mnemonicprefix = true
 	renames = copies
+	algorithm = histogram
 [rerere]
 	enabled = true
