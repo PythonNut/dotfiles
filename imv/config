@@ -1,0 +1,5 @@
+[binds]
+<Equals> = zoom 10
+<-> = zoom -10
+<Shift+Equals> = zoom 1
+<Shift+-> = zoom -1
