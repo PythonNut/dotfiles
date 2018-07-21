@@ -1,3 +1,5 @@
+[options]
+background = 002b36
 [binds]
 <Equals> = zoom 10
 <-> = zoom -10
