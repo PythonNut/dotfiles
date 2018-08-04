@@ -187,6 +187,7 @@ exec xinput set-prop 12 296 0    # enable while typing
 exec xinput set-prop 12 306 0.3 # pointer speed
 
 exec --no-startup-id gnome-flashback
+exec --no-startup-id nm-applet
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec --no-startup-id /usr/lib/gsd-xsettings
 exec --no-startup-id compton
