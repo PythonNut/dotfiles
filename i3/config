@@ -208,6 +208,9 @@ new_window pixel 0 px
 
 bindsym $mod+period workspace next; exec $movemouse
 bindsym $mod+comma workspace prev; exec $movemouse
+
+bindsym $mod+m workspace next; exec $movemouse
+bindsym $mod+n workspace prev; exec $movemouse
 bindsym $mod+Shift+greater move to workspace next; workspace next; exec $movemouse
 bindsym $mod+Shift+less move to workspace prev; workspace prev; exec $movemouse
 
