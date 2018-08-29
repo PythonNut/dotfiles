@@ -229,6 +229,10 @@ bindsym XF86AudioPrev exec playerctl previous
 bindsym XF86MonBrightnessUp exec sudo xbacklight -inc 10
 bindsym XF86MonBrightnessDown exec sudo xbacklight -dec 10
 
+bindsym --release Print exec "maim | xclip -selection clipboard -t image/png"
+bindsym --release Shift+Print exec "maim -s | xclip -selection clipboard -t image/png"
+bindsym --release $mod+Print exec "maim -i $(xdotool getactivewindow) | xclip -selection clipboard -t image/png"
+
 smart_borders on
 gaps inner 0
 smart_gaps on
