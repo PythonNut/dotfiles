@@ -44,10 +44,10 @@ bindsym $mod+space exec --no-startup-id "rofi -combi-modi window,drun -show comb
 
 # change focus
 set $movemouse "sh -c 'eval `xdotool getactivewindow getwindowgeometry --shell`; xdotool mousemove $((X+WIDTH/2)) $((Y+HEIGHT/2))'"
-bindsym $mod+h focus left; exec $movemouse
-bindsym $mod+j focus down; exec $movemouse
-bindsym $mod+k focus up; exec $movemouse
-bindsym $mod+l focus right; exec $movemouse
+bindsym $mod+h focus left; exec --no-startup-id $movemouse
+bindsym $mod+j focus down; exec --no-startup-id $movemouse
+bindsym $mod+k focus up; exec --no-startup-id $movemouse
+bindsym $mod+l focus right; exec --no-startup-id$movemouse
 # bindsym $mod+h focus left
 # bindsym $mod+j focus down
 # bindsym $mod+k focus up
@@ -103,16 +103,16 @@ bindsym $mod+a focus parent
 #bindsym $mod+d focus child
 
 # switch to workspace
-bindsym $mod+1 workspace 1; exec $movemouse
-bindsym $mod+2 workspace 2; exec $movemouse
-bindsym $mod+3 workspace 3; exec $movemouse
-bindsym $mod+4 workspace 4; exec $movemouse
-bindsym $mod+5 workspace 5; exec $movemouse
-bindsym $mod+6 workspace 6; exec $movemouse
-bindsym $mod+7 workspace 7; exec $movemouse
-bindsym $mod+8 workspace 8; exec $movemouse
-bindsym $mod+9 workspace 9; exec $movemouse
-bindsym $mod+0 workspace 10; exec $movemouse
+bindsym $mod+1 workspace 1; exec --no-startup-id $movemouse
+bindsym $mod+2 workspace 2; exec --no-startup-id $movemouse
+bindsym $mod+3 workspace 3; exec --no-startup-id $movemouse
+bindsym $mod+4 workspace 4; exec --no-startup-id $movemouse
+bindsym $mod+5 workspace 5; exec --no-startup-id $movemouse
+bindsym $mod+6 workspace 6; exec --no-startup-id $movemouse
+bindsym $mod+7 workspace 7; exec --no-startup-id $movemouse
+bindsym $mod+8 workspace 8; exec --no-startup-id $movemouse
+bindsym $mod+9 workspace 9; exec --no-startup-id $movemouse
+bindsym $mod+0 workspace 10; exec --no-startup-id $movemouse
 
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace 1
@@ -186,10 +186,10 @@ bindsym $mod+b bar hidden_state toggle
 gaps inner 0
 gaps outer 0
 
-exec xinput set-prop 12 286 1    # tap to click
-exec xinput set-prop 12 294 1    # natural scrolling
-exec xinput set-prop 12 296 0    # enable while typing
-exec xinput set-prop 12 306 0.3 # pointer speed
+exec --no-startup-id xinput set-prop 12 286 1    # tap to click
+exec --no-startup-id xinput set-prop 12 294 1    # natural scrolling
+exec --no-startup-id xinput set-prop 12 296 0    # enable while typing
+exec --no-startup-id xinput set-prop 12 306 0.3 # pointer speed
 
 exec --no-startup-id gnome-flashback
 exec --no-startup-id nm-applet
@@ -211,34 +211,34 @@ client.urgent           #002b36 #dc322f #fdf6e3 #002b36
 
 new_window pixel 0 px
 
-bindsym $mod+period workspace next; exec $movemouse
-bindsym $mod+comma workspace prev; exec $movemouse
+bindsym $mod+period workspace next; exec --no-startup-id $movemouse
+bindsym $mod+comma workspace prev; exec --no-startup-id $movemouse
 
-bindsym $mod+m workspace next; exec $movemouse
-bindsym $mod+n workspace prev; exec $movemouse
-bindsym $mod+Shift+greater move to workspace next; workspace next; exec $movemouse
-bindsym $mod+Shift+less move to workspace prev; workspace prev; exec $movemouse
+bindsym $mod+m workspace next; exec --no-startup-id $movemouse
+bindsym $mod+n workspace prev; exec --no-startup-id $movemouse
+bindsym $mod+Shift+greater move to workspace next; workspace next; exec --no-startup-id $movemouse
+bindsym $mod+Shift+less move to workspace prev; workspace prev; exec --no-startup-id $movemouse
 
-bindsym $mod+slash exec quickswitch -e
-bindsym $mod+Shift+slash exec quickswitch -e -j
+bindsym $mod+slash exec --no-startup-id quickswitch -e
+bindsym $mod+Shift+slash exec --no-startup-id quickswitch -e -j
 
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5%
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5%
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle
 
-bindsym XF86AudioPlay exec playerctl play
-bindsym XF86AudioPause exec playerctl pause
-bindsym XF86AudioNext exec playerctl next
-bindsym XF86AudioPrev exec playerctl previous
+bindsym XF86AudioPlay exec --no-startup-id playerctl play
+bindsym XF86AudioPause exec --no-startup-id playerctl pause
+bindsym XF86AudioNext exec --no-startup-id playerctl next
+bindsym XF86AudioPrev exec --no-startup-id playerctl previous
 
-bindsym XF86MonBrightnessUp exec sudo xbacklight -inc 10
-bindsym XF86MonBrightnessDown exec sudo xbacklight -dec 10
+bindsym XF86MonBrightnessUp exec --no-startup-id sudo xbacklight -inc 10
+bindsym XF86MonBrightnessDown exec --no-startup-id sudo xbacklight -dec 10
 
-bindsym --release Print exec "maim | xclip -selection clipboard -t image/png"
-bindsym --release Shift+Print exec "maim -s | xclip -selection clipboard -t image/png"
-bindsym --release $mod+Print exec "maim -i $(xdotool getactivewindow) | xclip -selection clipboard -t image/png"
+bindsym --release Print exec --no-startup-id "maim | xclip -selection clipboard -t image/png"
+bindsym --release Shift+Print exec --no-startup-id "maim -s | xclip -selection clipboard -t image/png"
+bindsym --release $mod+Print exec --no-startup-id "maim -i $(xdotool getactivewindow) | xclip -selection clipboard -t image/png"
 
-bindsym $mod+Shift+o exec "pgrep compton && pkill compton || compton -b"
+bindsym $mod+Shift+o exec --no-startup-id "pgrep compton && pkill compton || compton -b"
 
 smart_borders on
 gaps inner 0
