@@ -1,3 +1,4 @@
 rofi.theme: /usr/share/rofi/themes/solarized.rasi
 rofi.font: DejaVu Sans Mono 20
 rofi.location: 2
+rofi.fixed-num-lines: false
