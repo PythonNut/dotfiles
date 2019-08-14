@@ -187,10 +187,10 @@ bindsym $mod+b bar hidden_state toggle
 gaps inner 0
 gaps outer 0
 
-exec --no-startup-id xinput set-prop 12 286 1    # tap to click
-exec --no-startup-id xinput set-prop 12 294 1    # natural scrolling
-exec --no-startup-id xinput set-prop 12 296 0    # enable while typing
-exec --no-startup-id xinput set-prop 12 306 0.3 # pointer speed
+exec --no-startup-id xinput set-prop 12 308 1    # tap to click
+exec --no-startup-id xinput set-prop 12 316 1    # natural scrolling
+exec --no-startup-id xinput set-prop 12 318 0    # enable while typing
+exec --no-startup-id xinput set-prop 12 328 0.3 # pointer speed
 
 exec --no-startup-id gnome-flashback
 exec --no-startup-id nm-applet
