@@ -200,7 +200,6 @@ exec --no-startup-id compton -b
 exec --no-startup-id hsetroot -solid "#002b36"
 exec --no-startup-id keynav "loadconfig ~/.config/keynav/i3keynavrc"
 exec --no-startup-id libinput-gestures-setup start
-exec --no-startup-id indicator-kdeconnect
 exec --no-startup-id setxkbmap -option ctrl:nocaps
 exec --no-startup-id xcape -e "Control_L=Escape"
 exec --no-startup-id unclutter
