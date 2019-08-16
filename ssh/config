@@ -1,0 +1,6 @@
+Include ~/Documents/etc/ssh/config
+
+ControlMaster auto
+ControlPersist yes
+ControlPath ~/.ssh/sockets/socket-%r@%h:%p
+ServerAliveInterval 120
