@@ -226,11 +226,11 @@ live_config_reload: true
 
 shell:
   program: /bin/tmux
-  args:
-    - new-session
-    - -A
-    - -s
-    - main
+  # args:
+    # - new-session
+    # - -A
+    # - -s
+    # - main
 
 
 # Key bindings
