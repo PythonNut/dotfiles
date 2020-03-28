@@ -214,7 +214,6 @@ exec --no-startup-id hsetroot -solid "#002b36"
 exec --no-startup-id keynav "loadconfig ~/.config/keynav/i3keynavrc"
 exec --no-startup-id libinput-gestures-setup start
 exec --no-startup-id unclutter
-exec --no-startup-id xss-lock -l -- i3lock -c 002b36 --insidevercolor 002b36ff --insidewrongcolor dc322fff --insidecolor 002b36ff --ringcolor 073642ff --keyhlcolor 586e75ff --bshlcolor 586e75ff --linecolor 002b36ff --ringvercolor 586e75ff --ringwrongcolor dc322fff --separatorcolor 002b36ff --veriftext "" --wrongtext "" --noinputtext ""
 exec --no-startup-id "sleep 1; i3-msg reload"
 exec --no-startup-id "sleep 2; xcape -e 'Control_L=Escape'"
 
