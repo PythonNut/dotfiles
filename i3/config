@@ -42,6 +42,7 @@ bindsym $mod+Shift+q kill
 # installed.
 bindsym $mod+space exec --no-startup-id "rofi -combi-modi window,drun -show combi -modi combi"
 bindsym $mod+o exec --no-startup-id "rofimoji"
+bindsym $mod+p exec --no-startup-id "bwmenu"
 
 # change focus
 set $movemouse "sh -c 'eval `xdotool getactivewindow getwindowgeometry --shell`; xdotool mousemove $((X+WIDTH/2)) $((Y+HEIGHT/2))'"
