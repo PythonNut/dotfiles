@@ -121,6 +121,8 @@ bindsym $mod+8 workspace 8; exec --no-startup-id $movemouse
 bindsym $mod+9 workspace 9; exec --no-startup-id $movemouse
 bindsym $mod+0 workspace 10; exec --no-startup-id $movemouse
 
+workspace_auto_back_and_forth yes
+
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace 1
 bindsym $mod+Shift+2 move container to workspace 2
