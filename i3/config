@@ -260,7 +260,7 @@ bindsym $mod+Shift+o exec --no-startup-id "pgrep compton && pkill compton || com
 
 
 set $screenshot_full "maim | xclip -selection clipboard -t image/png"
-set $screenshot_select "maim -s | xclip -selection clipboard -t image/png"
+set $screenshot_select "maim -su | xclip -selection clipboard -t image/png"
 set $screenshot_window "maim -i $(xdotool getactivewindow) | xclip -selection clipboard -t image/png"
 
 bindsym --release Print       exec --no-startup-id $screenshot_full
