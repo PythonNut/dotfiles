@@ -256,11 +256,25 @@ bindsym XF86AudioPrev exec --no-startup-id playerctl previous
 bindsym XF86MonBrightnessUp exec --no-startup-id true $(pkexec brillo -equ 1500 -A 5)
 bindsym XF86MonBrightnessDown exec --no-startup-id true $(pkexec brillo -equ 1500 -U 5)
 
-bindsym --release Print exec --no-startup-id "maim | xclip -selection clipboard -t image/png"
-bindsym --release Shift+Print exec --no-startup-id "maim -s | xclip -selection clipboard -t image/png"
-bindsym --release $mod+Print exec --no-startup-id "maim -i $(xdotool getactivewindow) | xclip -selection clipboard -t image/png"
-
 bindsym $mod+Shift+o exec --no-startup-id "pgrep compton && pkill compton || compton -b"
+
+
+set $screenshot_full "maim | xclip -selection clipboard -t image/png"
+set $screenshot_select "maim -s | xclip -selection clipboard -t image/png"
+set $screenshot_window "maim -i $(xdotool getactivewindow) | xclip -selection clipboard -t image/png"
+
+bindsym --release Print       exec --no-startup-id $screenshot_full
+bindsym --release Shift+Print exec --no-startup-id $screenshot_select
+bindsym --release $mod+Print  exec --no-startup-id $screenshot_window
+
+mode "screenshot" {
+        bindsym s exec --no-startup-id $screenshot_select; mode "default"
+        bindsym w exec --no-startup-id $screenshot_window; mode "default"
+        bindsym f exec --no-startup-id $screenshot_full  ; mode "default"
+        bindsym Escape mode "default"
+}
+
+bindsym $mod+equal mode "screenshot"
 
 smart_borders on
 gaps inner 0
