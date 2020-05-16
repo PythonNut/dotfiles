@@ -41,7 +41,7 @@ bindsym $mod+Shift+q kill
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
 bindsym $mod+space exec --no-startup-id "rofi -combi-modi window,drun -show combi -modi combi"
-bindsym $mod+o exec --no-startup-id "rofimoji"
+bindsym $mod+o exec --no-startup-id "rofimoji -p"
 bindsym $mod+p exec --no-startup-id "bwmenu"
 
 # change focus
