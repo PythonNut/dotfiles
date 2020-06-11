@@ -256,6 +256,8 @@ bindsym XF86AudioPrev exec --no-startup-id playerctl previous
 
 bindsym XF86MonBrightnessUp exec --no-startup-id true $(pkexec brillo -equ 1500 -A 5)
 bindsym XF86MonBrightnessDown exec --no-startup-id true $(pkexec brillo -equ 1500 -U 5)
+bindsym XF86KbdBrightnessUp exec --no-startup-id true $(pkexec brillo -k -ru 1500 -A 25)
+bindsym XF86KbdBrightnessDown exec --no-startup-id true $(pkexec brillo -k -ru 1500 -U 25)
 
 bindsym $mod+Shift+o exec --no-startup-id "pgrep picom && pkill picom || picom -b --experimental-backends"
 
