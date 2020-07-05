@@ -245,9 +245,9 @@ bindsym $mod+Shift+less    move to workspace prev_on_output; workspace prev_on_o
 bindsym $mod+slash exec --no-startup-id quickswitch -e
 bindsym $mod+Shift+slash exec --no-startup-id quickswitch -e -j -f
 
-bindsym XF86AudioRaiseVolume exec --no-startup-id "pactl set-sink-volume $(pactl list short sinks | head | cut -f1) +5%"
-bindsym XF86AudioLowerVolume exec --no-startup-id "pactl set-sink-volume $(pactl list short sinks | head | cut -f1) -5%"
-bindsym XF86AudioMute exec --no-startup-id "pactl set-sink-mute $(pactl list short sinks | head | cut -f1) toggle"
+bindsym XF86AudioRaiseVolume exec --no-startup-id "pactl set-sink-volume @DEFAULT_SINK@ +5%"
+bindsym XF86AudioLowerVolume exec --no-startup-id "pactl set-sink-volume @DEFAULT_SINK@ -5%"
+bindsym XF86AudioMute exec --no-startup-id "pactl set-sink-mute @DEFAULT_SINK@ toggle"
 
 bindsym XF86AudioPlay exec --no-startup-id playerctl play-pause
 # bindsym XF86AudioPause exec --no-startup-id playerctl pause
