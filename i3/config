@@ -225,7 +225,7 @@ exec --no-startup-id libinput-gestures-setup start
 exec --no-startup-id unclutter
 exec --no-startup-id snixembed
 exec --no-startup-id "sleep 3; i3-msg reload"
-exec --no-startup-id "sleep 2; xcape -e 'Control_L=Escape'"
+exec --no-startup-id "sleep 3; xcape -e 'Control_L=Escape'"
 
 client.focused          #002b36 #586e75 #fdf6e3 #268bd2
 client.focused_inactive #002b36 #073642 #839496 #073642
