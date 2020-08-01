@@ -223,7 +223,6 @@ exec --no-startup-id hsetroot -solid "#002b36"
 exec --no-startup-id keynav "loadconfig ~/.config/keynav/i3keynavrc"
 exec --no-startup-id libinput-gestures-setup start
 exec --no-startup-id unclutter
-exec --no-startup-id snixembed
 exec --no-startup-id "sleep 3; i3-msg reload"
 exec --no-startup-id "sleep 3; xcape -e 'Control_L=Escape'"
 
