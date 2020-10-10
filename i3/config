@@ -245,6 +245,7 @@ bindsym $mod+Shift+less    move to workspace prev_on_output; workspace prev_on_o
 
 bindsym $mod+slash exec --no-startup-id quickswitch -e
 bindsym $mod+Shift+slash exec --no-startup-id quickswitch -e -j -f
+bindsym $mod+u [urgent=latest] focus
 
 bindsym XF86AudioRaiseVolume exec --no-startup-id "pactl set-sink-volume @DEFAULT_SINK@ +5%"
 bindsym XF86AudioLowerVolume exec --no-startup-id "pactl set-sink-volume @DEFAULT_SINK@ -5%"
