@@ -264,7 +264,7 @@ bindsym XF86MonBrightnessDown exec --no-startup-id true $(pkexec brillo -equ 150
 bindsym XF86KbdBrightnessUp exec --no-startup-id true $(pkexec brillo -k -ru 1500 -A 25)
 bindsym XF86KbdBrightnessDown exec --no-startup-id true $(pkexec brillo -k -ru 1500 -U 25)
 
-bindsym $mod+Shift+o exec --no-startup-id "pgrep picom && pkill picom || picom -b --experimental-backends"
+bindsym $mod+Shift+o exec --no-startup-id "pgrep picom && (pkill picom && notify-send -t 1000 picom killed) || (picom -b --experimental-backends && notify-send -t 1000 picom started)"
 
 
 set $screenshot_full "maim | xclip -selection clipboard -t image/png"
