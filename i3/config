@@ -250,6 +250,8 @@ bindsym $mod+slash exec --no-startup-id quickswitch -e
 bindsym $mod+Shift+slash exec --no-startup-id quickswitch -e -j -f
 bindsym $mod+u [urgent=latest] focus
 
+set $notify notify-send -h string:x-canonical-private-synchronous:my-notification -t 1000
+
 bindsym XF86AudioRaiseVolume exec --no-startup-id "pactl set-sink-volume @DEFAULT_SINK@ +5%"
 bindsym XF86AudioLowerVolume exec --no-startup-id "pactl set-sink-volume @DEFAULT_SINK@ -5%"
 bindsym XF86AudioMute exec --no-startup-id "pactl set-sink-mute @DEFAULT_SINK@ toggle"
@@ -259,12 +261,12 @@ bindsym XF86AudioPlay exec --no-startup-id playerctl play-pause
 bindsym XF86AudioNext exec --no-startup-id playerctl next
 bindsym XF86AudioPrev exec --no-startup-id playerctl previous
 
-bindsym XF86MonBrightnessUp exec --no-startup-id true $(pkexec brillo -equ 1500 -A 5)
-bindsym XF86MonBrightnessDown exec --no-startup-id true $(pkexec brillo -equ 1500 -U 5)
-bindsym XF86KbdBrightnessUp exec --no-startup-id true $(pkexec brillo -k -ru 1500 -A 25)
-bindsym XF86KbdBrightnessDown exec --no-startup-id true $(pkexec brillo -k -ru 1500 -U 25)
+bindsym XF86MonBrightnessUp exec --no-startup-id true $(pkexec brillo -equ 1500 -A 5) && $notify $(brillo -eqG)
+bindsym XF86MonBrightnessDown exec --no-startup-id true $(pkexec brillo -equ 1500 -U 5) && $notify $(brillo -eqG)
+bindsym XF86KbdBrightnessUp exec --no-startup-id true $(pkexec brillo -k -pu 1500 -A 10) && $notify keyboard_backlight $(brillo -kpG)
+bindsym XF86KbdBrightnessDown exec --no-startup-id true $(pkexec brillo -k -pu 1500 -U 10) && $notify keyboard_backlight $(brillo -kpG)
 
-bindsym $mod+Shift+o exec --no-startup-id "pgrep picom && (pkill picom && notify-send -t 1000 picom killed) || (picom -b --experimental-backends && notify-send -t 1000 picom started)"
+bindsym $mod+Shift+o exec --no-startup-id "pgrep picom && (pkill picom && $notify picom killed) || (picom -b --experimental-backends && $notify picom started)"
 
 
 set $screenshot_full "maim | xclip -selection clipboard -t image/png"
