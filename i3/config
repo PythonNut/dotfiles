@@ -225,7 +225,7 @@ exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec --no-startup-id dunst
 exec --no-startup-id picom -b --experimental-backends
 exec --no-startup-id hsetroot -solid "#002b36"
-exec --no-startup-id keynav "loadconfig ~/.config/keynav/i3keynavrc"
+exec --no-startup-id keynav "loadconfig ~/.dotfiles/keynav/i3keynavrc"
 exec --no-startup-id libinput-gestures-setup start
 exec --no-startup-id unclutter
 exec --no-startup-id "sleep 3; i3-msg reload"
