@@ -290,6 +290,8 @@ mode "screenshot" {
 
 bindsym $mod+equal mode "screenshot"
 
+for_window [class="zoom" instance="zoom" title="^zoom$"] floating enable
+
 smart_borders on
 gaps inner 0
 smart_gaps on
