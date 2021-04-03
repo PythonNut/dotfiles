@@ -219,11 +219,13 @@ bindsym $mod+b border toggle
 gaps inner 0
 gaps outer 0
 
+set $start_picom sh -c 'picom -b --experimental-backends $((glxinfo -B | grep vendor | grep NVIDIA >/dev/null) && echo --no-vsync || echo --vsync)'
+
 exec --no-startup-id gnome-flashback
 exec --no-startup-id nm-applet
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec --no-startup-id dunst
-exec --no-startup-id picom -b --experimental-backends
+exec --no-startup-id "$start_picom"
 exec --no-startup-id hsetroot -solid "#002b36"
 exec --no-startup-id keynav "loadconfig ~/.dotfiles/keynav/i3keynavrc"
 exec --no-startup-id libinput-gestures-setup start
@@ -270,7 +272,7 @@ bindsym XF86MonBrightnessDown exec --no-startup-id true $(pkexec brillo -equ 150
 bindsym XF86KbdBrightnessUp exec --no-startup-id true $(pkexec brillo -k -pu 1500 -A 10) && $notify keyboard_backlight $(brillo -kpG)
 bindsym XF86KbdBrightnessDown exec --no-startup-id true $(pkexec brillo -k -pu 1500 -U 10) && $notify keyboard_backlight $(brillo -kpG)
 
-bindsym $mod+Shift+o exec --no-startup-id "pgrep picom && (pkill picom && $notify picom killed) || (picom -b --experimental-backends && $notify picom started)"
+bindsym $mod+Shift+o exec --no-startup-id "pgrep picom && (pkill picom && $notify picom killed) || ($start_picom && $notify picom started)"
 
 
 set $screenshot_full "maim | xclip -selection clipboard -t image/png"
