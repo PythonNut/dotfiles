@@ -1,10 +1,12 @@
 set selection-clipboard clipboard
 
-set scroll-page-aware "true"
-set smooth-scroll "true"
+set scroll-page-aware true
+set smooth-scroll true
 set scroll-full-overlap 0.01
 set scroll-step 100
-set render-loading "false"
+set render-loading false
+set window-title-basename true
+set statusbar-home-tilde true
 
 set recolor-darkcolor "#93a1a1"
 set recolor-lightcolor "#002b36"
