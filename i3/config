@@ -275,6 +275,7 @@ bindsym XF86KbdBrightnessDown exec --no-startup-id true $(pkexec brillo -k -pu 1
 bindsym $mod+Shift+o exec --no-startup-id "pgrep picom && (pkill picom && $notify picom killed) || ($start_picom && $notify picom started)"
 
 
+set $screenrecord "peek -b ffmpeg"
 set $screenshot_full "maim | xclip -selection clipboard -t image/png"
 set $screenshot_select "maim -su | xclip -selection clipboard -t image/png"
 set $screenshot_window "maim -i $(xdotool getactivewindow) | xclip -selection clipboard -t image/png"
@@ -287,6 +288,7 @@ mode "screenshot" {
         bindsym s exec --no-startup-id $screenshot_select; mode "default"
         bindsym w exec --no-startup-id $screenshot_window; mode "default"
         bindsym f exec --no-startup-id $screenshot_full  ; mode "default"
+        bindsym r exec --no-startup-id $screenrecord     ; mode "default"
         bindsym Escape mode "default"
 }
 
