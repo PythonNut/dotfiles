@@ -1,0 +1,8 @@
+configuration {
+	font: "DejaVu Sans Mono 20";
+	location: 2;
+	yoffset: -1;
+	fixed-num-lines: false;
+	show-icons: true;
+	theme: "/usr/share/rofi/themes/solarized.rasi";
+}
