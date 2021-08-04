@@ -42,6 +42,7 @@ bindsym $mod+Shift+q kill
 # installed.
 bindsym $mod+space exec --no-startup-id "rofi -combi-modi window,drun -show combi -modi combi"
 bindsym $mod+o exec --no-startup-id "rofimoji"
+bindsym $mod+Shift+o exec --no-startup-id "unipicker --command 'rofi -dmenu' --copy"
 bindsym $mod+p exec --no-startup-id "bwmenu"
 
 # change focus
@@ -272,7 +273,7 @@ bindsym XF86MonBrightnessDown exec --no-startup-id true $(pkexec brillo -equ 150
 bindsym XF86KbdBrightnessUp exec --no-startup-id true $(pkexec brillo -k -pu 1500 -A 10) && $notify keyboard_backlight $(brillo -kpG)
 bindsym XF86KbdBrightnessDown exec --no-startup-id true $(pkexec brillo -k -pu 1500 -U 10) && $notify keyboard_backlight $(brillo -kpG)
 
-bindsym $mod+Shift+o exec --no-startup-id "pgrep picom && (pkill picom && $notify picom killed) || ($start_picom && $notify picom started)"
+bindsym $mod+Shift+p exec --no-startup-id "pgrep picom && (pkill picom && $notify picom killed) || ($start_picom && $notify picom started)"
 
 
 set $screenrecord "peek -b ffmpeg"
