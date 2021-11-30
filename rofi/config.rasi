@@ -4,5 +4,5 @@ configuration {
 	yoffset: -1;
 	fixed-num-lines: false;
 	show-icons: true;
-	theme: "/usr/share/rofi/themes/solarized.rasi";
 }
+@theme "/usr/share/rofi/themes/solarized.rasi"
