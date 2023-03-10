@@ -295,7 +295,15 @@ mode "screenshot" {
 
 bindsym $mod+equal mode "screenshot"
 
-for_window [class="zoom" instance="zoom" title="^zoom$"] floating enable
+for_window [instance="^zoom(\.|$)" title="^Zoom($|\s)"] floating disable
+for_window [instance="^zoom(\.|$)" title="^zoom"] floating enable
+no_focus [instance="^zoom(\.|$)" title="^zoom"]
+for_window [instance="^join\?action=join" title="^Zoom($|\s)"] floating disable
+for_window [instance="^join\?action=join" title="^join\?action=join"] floating enable
+no_focus [instance="^join\?action=join" title="^join\?action=join"]
+for_window [instance="^start\?action=start" title="^Zoom($|\s)"] floating disable
+for_window [instance="^start\?action=start" title="^start\?action=start"] floating enable
+no_focus [instance="^start\?action=start" title="^start\?action=start"]
 
 smart_borders on
 gaps inner 0
