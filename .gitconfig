@@ -14,3 +14,5 @@
 	algorithm = histogram
 [rerere]
 	enabled = true
+[init]
+	defaultBranch = main
