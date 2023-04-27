@@ -8,12 +8,12 @@ base2 = '#eee8d5'
 
 return {
    font = wezterm.font 'Dejavu Sans Mono',
-   font_size = 9.0,
-   color_scheme = "Solarized Dark (base16)",
+   font_size = 10.0,
+   color_scheme = "Solarized Dark - Patched",
    hide_tab_bar_if_only_one_tab = true,
    window_frame = {
       font = wezterm.font 'Dejavu Sans',
-      font_size = 9.0,
+      font_size = 10.0,
       active_titlebar_bg = base02,
       inactive_titlebar_bg = base02,
    },
