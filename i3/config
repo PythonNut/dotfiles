@@ -189,6 +189,7 @@ bar {
         mode hide
         hidden_state hide
         modifier $mod
+        tray_output primary
 
         colors {
                 background #002b36R
@@ -225,14 +226,14 @@ set $start_picom sh -c 'picom -b --experimental-backends $((glxinfo -B | grep ve
 exec --no-startup-id gnome-flashback
 exec --no-startup-id nm-applet
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-exec --no-startup-id dunst
 exec --no-startup-id "$start_picom"
-exec --no-startup-id hsetroot -solid "#002b36"
 exec --no-startup-id keynav "loadconfig ~/.dotfiles/keynav/i3keynavrc"
 exec --no-startup-id libinput-gestures-setup start
 exec --no-startup-id unclutter
 exec --no-startup-id "sleep 3; i3-msg reload"
 exec --no-startup-id "sleep 3; xcape -e 'Control_L=Escape'"
+exec --no-startup-id /usr/lib/gnome-flashback/gnome-flashback-idle-monitor
+exec --no-startup-id /usr/lib/xdg-desktop-portal-gnome
 
 client.focused          #002b36 #586e75 #fdf6e3 #268bd2
 client.focused_inactive #002b36 #073642 #839496 #073642
