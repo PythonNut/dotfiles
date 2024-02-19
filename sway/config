@@ -127,7 +127,7 @@ bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'swaymsg exit'"
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -183,12 +183,14 @@ gaps inner 0
 gaps outer 0
 exec xsettingsd
 exec libinput-gestures
+exec swaybg
 exec_always 'xprop -root -f _XWAYLAND_GLOBAL_OUTPUT_SCALE 32c -set _XWAYLAND_GLOBAL_OUTPUT_SCALE 2'
 # client.focused          #002b36 #586e75 #fdf6e3 #268bd2
 # client.focused_inactive #002b36 #073642 #839496 #073642
 # client.unfocused        #002b36 #073642 #839496 #073642
 # client.urgent           #002b36 #dc322f #fdf6e3 #002b36
 
+output * bg #002b36 solid_color
 default_border pixel 0 px
 
 bindsym $mod+period workspace next; exec --no-startup-id $movemouse
