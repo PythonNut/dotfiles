@@ -184,6 +184,7 @@ gaps outer 0
 exec xsettingsd
 exec libinput-gestures
 exec swaybg
+exec dunst
 exec_always 'xprop -root -f _XWAYLAND_GLOBAL_OUTPUT_SCALE 32c -set _XWAYLAND_GLOBAL_OUTPUT_SCALE 2'
 # client.focused          #002b36 #586e75 #fdf6e3 #268bd2
 # client.focused_inactive #002b36 #073642 #839496 #073642
