@@ -182,7 +182,8 @@ bindsym $mod+b bar hidden_state toggle
 gaps inner 0
 gaps outer 0
 exec xsettingsd
-exec libinput-gestures
+bindgesture swipe:4:right workspace prev
+bindgesture swipe:4:left workspace next
 exec swaybg
 exec dunst
 exec_always 'xprop -root -f _XWAYLAND_GLOBAL_OUTPUT_SCALE 32c -set _XWAYLAND_GLOBAL_OUTPUT_SCALE 2'
