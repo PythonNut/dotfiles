@@ -235,3 +235,5 @@ input type:touchpad {
     scroll_factor 0.6
     tap enabled
 }
+
+include /etc/sway/config.d/*
