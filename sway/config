@@ -178,6 +178,7 @@ bar {
 }
 
 bindsym $mod+b bar hidden_state toggle
+bindsym $mod+u exec swayr switch-to-urgent-or-lru-window
 
 gaps inner 0
 gaps outer 0
@@ -186,6 +187,8 @@ bindgesture swipe:4:right workspace prev
 bindgesture swipe:4:left workspace next
 exec swaybg
 exec dunst
+exec nm-applet
+exec swayrd
 exec_always 'xprop -root -f _XWAYLAND_GLOBAL_OUTPUT_SCALE 32c -set _XWAYLAND_GLOBAL_OUTPUT_SCALE 2'
 # client.focused          #002b36 #586e75 #fdf6e3 #268bd2
 # client.focused_inactive #002b36 #073642 #839496 #073642
