@@ -39,11 +39,11 @@ bindsym $mod+Shift+q kill
 bindsym $mod+space exec --no-startup-id "rofi -combi-modi window,drun -show combi -modi combi -font 'DejaVu Sans Mono 20'"
 
 # change focus
-set $movemouse "sh -c 'eval `xdotool getactivewindow getwindowgeometry --shell`; xdotool mousemove $((X+WIDTH/2)) $((Y+HEIGHT/2))'"
+set $movemouse "sh ~/.config/sway/center_mouse_on_focus.sh"
 bindsym $mod+h focus left; exec --no-startup-id $movemouse
 bindsym $mod+j focus down; exec --no-startup-id $movemouse
 bindsym $mod+k focus up; exec --no-startup-id $movemouse
-bindsym $mod+l focus right; exec --no-startup-id$movemouse
+bindsym $mod+l focus right; exec --no-startup-id $movemouse
 # bindsym $mod+h focus left
 # bindsym $mod+j focus down
 # bindsym $mod+k focus up
