@@ -209,16 +209,21 @@ bindsym $mod+Shift+less move to workspace prev; workspace prev; exec --no-startu
 bindsym $mod+slash exec ~/.cargo/bin/sway-new-workspace open
 bindsym $mod+Shift+slash exec ~/.cargo/bin/sway-new-workspace move
 
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5%
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5%
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle
+set $notify notify-send -h string:x-canonical-private-synchronous:my-notification -t 1000
+
+set $pa_default_sink pactl list short sinks | grep $(pactl info | sed -En 's/Default Sink: (.*)/\1/p') | cut -f1
+set $pa_volume pactl list sinks | grep '^[[:space:]]Volume:' | head -n $(( $($pa_default_sink) + 1 )) | tail -n 1 | sed -e 's,.* \([0-9][0-9]*\)%.*,\1,'
+set $pa_mute pactl list sinks | grep '^[[:space:]]Mute:' | head -n $(( $($pa_default_sink) + 1 )) | tail -n 1 | cut -d: -f2
+
+bindsym XF86AudioRaiseVolume exec --no-startup-id "pactl set-sink-volume @DEFAULT_SINK@ +5% && $notify pulseaudio_volume $($pa_volume)"
+bindsym XF86AudioLowerVolume exec --no-startup-id "pactl set-sink-volume @DEFAULT_SINK@ -5% && $notify pulseaudio_volume $($pa_volume)"
+bindsym XF86AudioMute exec --no-startup-id "pactl set-sink-mute @DEFAULT_SINK@ toggle && $notify pulseaudio_mute $($pa_mute)"
 
 bindsym XF86AudioPlay exec --no-startup-id playerctl play
 bindsym XF86AudioPause exec --no-startup-id playerctl pause
 bindsym XF86AudioNext exec --no-startup-id playerctl next
 bindsym XF86AudioPrev exec --no-startup-id playerctl previous
 
-set $notify notify-send -h string:x-canonical-private-synchronous:my-notification -t 1000
 set $disp_bright brightnessctl
 set $disp_notify $notify brightness $($disp_bright get -P)
 set $kbd_bright brightnessctl --device='kbd_backlight'
