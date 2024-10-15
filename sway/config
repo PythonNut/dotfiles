@@ -221,9 +221,25 @@ bindsym XF86AudioPrev exec --no-startup-id playerctl previous
 bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set +10%
 bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set -- -10%
 
-bindsym --release Print exec --no-startup-id "maim | xclip -selection clipboard -t image/png"
-bindsym --release Shift+Print exec --no-startup-id "maim -s | xclip -selection clipboard -t image/png"
-bindsym --release $mod+Print exec --no-startup-id "maim -i $(xdotool getactivewindow) | xclip -selection clipboard -t image/png"
+set $screenrecord "peek -b ffmpeg"
+set $screenshot_full "grimshot copy output"
+set $screenshot_select "grimshot copy area"
+set $screenshot_window "grimshot copy active"
+
+bindsym --release Print       exec --no-startup-id $screenshot_full
+bindsym --release Shift+Print exec --no-startup-id $screenshot_select
+bindsym --release $mod+Print  exec --no-startup-id $screenshot_window
+
+mode "screenshot" {
+        bindsym s exec --no-startup-id $screenshot_select; mode "default"
+        bindsym w exec --no-startup-id $screenshot_window; mode "default"
+        bindsym f exec --no-startup-id $screenshot_full  ; mode "default"
+        bindsym r exec --no-startup-id $screenrecord     ; mode "default"
+        bindsym Escape mode "default"
+}
+
+bindsym $mod+equal mode "screenshot"
+
 
 smart_borders on
 gaps inner 0
