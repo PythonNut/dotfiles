@@ -218,8 +218,19 @@ bindsym XF86AudioPause exec --no-startup-id playerctl pause
 bindsym XF86AudioNext exec --no-startup-id playerctl next
 bindsym XF86AudioPrev exec --no-startup-id playerctl previous
 
-bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set +10%
-bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set -- -10%
+set $notify notify-send -h string:x-canonical-private-synchronous:my-notification -t 1000
+set $disp_bright brightnessctl
+set $disp_notify $notify brightness $($disp_bright get -P)
+set $kbd_bright brightnessctl --device='kbd_backlight'
+set $kbd_notify $notify keyboard_brightness $($kbd_bright get -P)
+
+bindsym XF86MonBrightnessUp exec --no-startup-id $disp_bright set +10% && $disp_notify
+bindsym XF86MonBrightnessDown exec --no-startup-id $disp_bright set -- -10% && $disp_notify
+
+bindsym XF86KbdBrightnessUp exec --no-startup-id $kbd_bright set +10% && $kbd_notify
+bindsym XF86KbdBrightnessDown exec --no-startup-id $kbd_bright set -- -10% && $kbd_notify
+bindsym Shift+XF86MonBrightnessUp exec --no-startup-id $kbd_bright set +10% && $kbd_notify
+bindsym Shift+XF86MonBrightnessDown exec --no-startup-id $kbd_bright set -- -10% && $kbd_notify
 
 set $screenrecord "peek -b ffmpeg"
 set $screenshot_full "grimshot copy output"
