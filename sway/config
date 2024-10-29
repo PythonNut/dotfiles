@@ -160,7 +160,7 @@ bindsym $mod+r mode "resize"
 bar {
         height 20
         position top
-        status_command i3status
+        status_command i3status-rs
         mode hide
         hidden_state hide
         modifier $mod
