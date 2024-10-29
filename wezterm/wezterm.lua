@@ -17,6 +17,7 @@ return {
       active_titlebar_bg = base02,
       inactive_titlebar_bg = base02,
    },
+   mux_enable_ssh_agent = false,
    colors = {
       cursor_bg = base1,
       cursor_fg = base02,
