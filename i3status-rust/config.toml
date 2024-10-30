@@ -17,8 +17,8 @@ critical_cpu = 90
 
 [[block]]
 block = "memory"
-format = " $icon $mem_total_used_percents.eng(w:2) "
-format_alt = " $icon_swap $swap_used_percents.eng(w:2) "
+format = " $icon $mem_used_percents.eng(w:2) "
+format_alt = " $icon_swap $swap_used.eng(p:Gi) ZR $zram_compressed.eng(p:Mi,w:1) @ $zram_comp_ratio.eng(w:1) ZS $zswap_compressed.eng(p:Mi,w:1) @ $zswap_comp_ratio.eng(w:1) "
 
 [[block]]
 block = "battery"
