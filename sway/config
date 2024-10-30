@@ -183,8 +183,8 @@ bindsym $mod+u exec swayr switch-to-urgent-or-lru-window
 gaps inner 0
 gaps outer 0
 exec xsettingsd
-bindgesture swipe:4:right workspace prev
-bindgesture swipe:4:left workspace next
+bindgesture swipe:4:right workspace prev_on_output
+bindgesture swipe:4:left workspace next_on_output
 exec swaybg
 exec dunst
 exec nm-applet
