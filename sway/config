@@ -201,6 +201,8 @@ bindsym $mod+comma workspace prev; exec --no-startup-id $movemouse
 
 bindsym $mod+m workspace next_on_output; exec --no-startup-id $movemouse
 bindsym $mod+n workspace prev_on_output; exec --no-startup-id $movemouse
+bindsym $mod+Shift+m exec --no-startup-id "sh ~/.config/sway/swap_name_with_right.sh"
+bindsym $mod+Shift+n exec --no-startup-id "sh ~/.config/sway/swap_name_with_left.sh"
 bindsym $mod+Shift+greater move to workspace next; workspace next; exec --no-startup-id $movemouse
 bindsym $mod+Shift+less move to workspace prev; workspace prev; exec --no-startup-id $movemouse
 
