@@ -124,6 +124,13 @@ bindsym $mod+Shift+0 move container to workspace 10
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
+
+# Make the currently focused window a scratchpad
+bindsym $mod+Shift+minus move scratchpad
+
+# Show the first scratchpad window
+bindsym $mod+minus scratchpad show
+
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec swaynag -t warning -m 'Exit menu' -Z 'Log out' 'swaymsg exit' -Z 'Switch user' 'gdmflexiserver --startnew' -Z 'Reload sway' 'swaymsg reload'
 
