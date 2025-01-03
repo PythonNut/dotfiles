@@ -1,1 +1,3 @@
 theme = Solarized Dark - Patched
+palette = 8=#586e75
+bold-is-bright = true
