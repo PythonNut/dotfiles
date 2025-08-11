@@ -1,5 +1,7 @@
 theme = Solarized Dark - Patched
 palette = 8=#586e75
+clipboard-read = allow
+clipboard-write = allow
 window-theme = ghostty
 bold-is-bright = true
 window-decoration = false
