@@ -1,9 +1,13 @@
 [Desktop Entry]
 Type=Application
 Name=Signal
-Comment=Electron application that links with Signal on mobile
+Comment=Signal - Private Messenger
+Comment[de]=Signal - Sicherer Messenger
 Icon=signal-desktop
-Exec=signal-desktop --use-tray-icon
+Exec=signal-desktop --ozone-platform-hint=auto -- %u
 Terminal=false
 Categories=Network;InstantMessaging;
-StartupWMClass=Signal
+StartupWMClass=signal
+MimeType=x-scheme-handler/sgnl;x-scheme-handler/signalcaptcha;
+Keywords=sgnl;chat;im;messaging;messenger;security;privat;
+X-GNOME-UsesNotifications=true
