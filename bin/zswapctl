@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+d="/sys/kernel/debug/zswap"
+
+# These files exist when debugfs is mounted and zswap is enabled
+stored_pages=$(cat "$d/stored_pages")
+pool_total_size=$(cat "$d/pool_total_size")
+
+page_size=$(getconf PAGESIZE)
+
+# 1) GB stored in zswap (stored_pages * page_size)
+stored_bytes=$(( stored_pages * page_size ))
+
+# 2) total memory zswap takes up (pool_total_size already bytes)
+pool_bytes=$pool_total_size
+
+# 3) compression ratio (stored bytes / pool bytes)
+if [ "$pool_bytes" -gt 0 ]; then
+  # Use awk for float
+  ratio=$(awk -v s="$stored_bytes" -v p="$pool_bytes" 'BEGIN { printf "%.2f", s/p }')
+else
+  ratio="N/A"
+fi
+
+format_bytes() {
+  local b=$1
+  local gb
+  gb=$(awk -v b="$b" 'BEGIN { printf "%.2f", b/1024/1024/1024 }')
+  if awk -v g="$gb" 'BEGIN { exit (g < 1.0) ? 0 : 1 }'; then
+    awk -v b="$b" 'BEGIN { printf "%.2f MB", b/1024/1024 }'
+  else
+    printf "%s GB" "$gb"
+  fi
+}
+
+echo "Stored in zswap: $(format_bytes "$stored_bytes")"
+echo "Total zswap memory: $(format_bytes "$pool_bytes")"
+echo "Compression ratio: $ratio"
