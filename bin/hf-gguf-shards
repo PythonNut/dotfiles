@@ -1,0 +1,279 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+usage() {
+  cat >&2 <<EOF
+Usage: $(basename "$0") [--user-prefix|--no-user-prefix] [--dest DIR] [--merge] <huggingface-gguf-url>...
+
+Options:
+  --user-prefix     Prefix downloaded files with '<username>:' (default)
+  --no-user-prefix  Do not prefix downloaded files with the uploader name
+  --dest DIR        Write downloaded files to DIR (default: current directory)
+  --merge           Merge downloaded shards into a single GGUF and delete the shards
+
+Environment:
+  HF_GGUF_SHARDS_RETRY               Number of curl retry attempts (default: 10)
+  HF_GGUF_SHARDS_IK_LLAMA_GGUF_SPLIT Override path to ik llama-gguf-split
+  HF_GGUF_SHARDS_IK_GGUF_DUMP        Override path to ik gguf_dump.py
+EOF
+}
+
+user_prefix=1
+dest_dir="$(pwd)"
+merge_shards=0
+retry_count="${HF_GGUF_SHARDS_RETRY:-10}"
+
+mainline_merge_tool="$(command -v llama-gguf-split || true)"
+ik_merge_tool="${HF_GGUF_SHARDS_IK_LLAMA_GGUF_SPLIT:-}"
+ik_gguf_dump="${HF_GGUF_SHARDS_IK_GGUF_DUMP:-}"
+
+find_ik_merge_tool() {
+  local candidate
+
+  if [[ -n "$ik_merge_tool" ]]; then
+    [[ -x "$ik_merge_tool" ]]
+    return
+  fi
+
+  for candidate in \
+    "$HOME/bin/ik_llama.cpp/build/bin/llama-gguf-split" \
+    "/home/pythonnut/bin/ik_llama.cpp/build/bin/llama-gguf-split"
+  do
+    if [[ -x "$candidate" ]]; then
+      ik_merge_tool="$candidate"
+      return
+    fi
+  done
+
+  return 1
+}
+
+find_ik_gguf_dump() {
+  local candidate
+
+  if [[ -n "$ik_gguf_dump" ]]; then
+    [[ -f "$ik_gguf_dump" ]]
+    return
+  fi
+
+  for candidate in \
+    "$HOME/bin/ik_llama.cpp/gguf-py/scripts/gguf_dump.py" \
+    "/home/pythonnut/bin/ik_llama.cpp/gguf-py/scripts/gguf_dump.py"
+  do
+    if [[ -f "$candidate" ]]; then
+      ik_gguf_dump="$candidate"
+      return
+    fi
+  done
+
+  return 1
+}
+
+uses_ik_only_tensor_types() {
+  local gguf_file="$1"
+
+  python3 - "$gguf_file" "$ik_gguf_dump" <<'PY'
+import sys
+from pathlib import Path
+
+gguf_file = Path(sys.argv[1])
+gguf_dump = Path(sys.argv[2])
+
+sys.path.insert(0, str(gguf_dump.parent.parent))
+
+try:
+    from gguf import GGUFReader
+
+    reader = GGUFReader(str(gguf_file), 'r')
+    if not reader.tensors:
+        raise SystemExit(3)
+    if any(int(tensor.tensor_type) >= 41 for tensor in reader.tensors):
+        raise SystemExit(0)
+    raise SystemExit(1)
+except SystemExit:
+    raise
+except Exception as exc:
+    print(f"failed to inspect GGUF tensor types: {exc}", file=sys.stderr)
+    raise SystemExit(2)
+PY
+}
+
+choose_merge_tool() {
+  local inspect_status
+  local saw_inspect_error=0
+  local gguf_file
+
+  if find_ik_merge_tool && find_ik_gguf_dump; then
+    for gguf_file in "$@"; do
+      if uses_ik_only_tensor_types "$gguf_file"; then
+        printf '%s\n' "$ik_merge_tool"
+        return 0
+      fi
+
+      inspect_status=$?
+      if [[ "$inspect_status" -eq 3 ]]; then
+        continue
+      fi
+
+      if [[ "$inspect_status" -gt 1 ]]; then
+        saw_inspect_error=1
+      fi
+    done
+
+    if (( saw_inspect_error )); then
+      echo "Warning: could not fully inspect GGUF tensor types; falling back to mainline llama-gguf-split" >&2
+    fi
+  fi
+
+  if [[ -n "$mainline_merge_tool" ]]; then
+    printf '%s\n' "$mainline_merge_tool"
+    return 0
+  fi
+
+  echo "--merge requires llama-gguf-split in PATH or an ik llama-gguf-split configured via HF_GGUF_SHARDS_IK_LLAMA_GGUF_SPLIT" >&2
+  return 1
+}
+
+process_url() {
+  local url="$1"
+  local base_url query file_name user_name
+  local prefix total_shards suffix total
+  local merged_name merged_output_file first_output_file output_file
+  local i shard_num shard_file shard_url merge_tool
+  local -a downloaded_files=()
+
+  base_url="${url%%\?*}"
+  query=""
+  if [[ "$url" == *\?* ]]; then
+    query="?${url#*\?}"
+  fi
+
+  file_name="${base_url##*/}"
+  user_name=""
+
+  if [[ "$base_url" =~ ^https://huggingface\.co/([^/]+)/[^/]+/resolve/ ]]; then
+    user_name="${BASH_REMATCH[1]}"
+  elif (( user_prefix )); then
+    echo "Could not parse uploader name from URL:" >&2
+    echo "  $url" >&2
+    exit 1
+  fi
+
+  if [[ "$file_name" =~ ^(.*-)([0-9]{5})-of-([0-9]{5})(\.gguf)$ ]]; then
+    prefix="${BASH_REMATCH[1]}"
+    total_shards="${BASH_REMATCH[3]}"
+    suffix="${BASH_REMATCH[4]}"
+    total=$((10#$total_shards))
+    first_output_file=""
+    merged_name="${prefix%-}${suffix}"
+    merged_output_file="$dest_dir/$merged_name"
+
+    if (( user_prefix )); then
+      merged_output_file="$dest_dir/${user_name}:${merged_name}"
+    fi
+
+    for ((i = 1; i <= total; i++)); do
+      shard_num=$(printf "%05d" "$i")
+      shard_file="${prefix}${shard_num}-of-${total_shards}${suffix}"
+      output_file="$dest_dir/$shard_file"
+
+      if (( user_prefix )); then
+        output_file="$dest_dir/${user_name}:${shard_file}"
+      fi
+
+      shard_url="${base_url%/*}/${shard_file}${query}"
+
+      echo "Downloading ${shard_file} -> ${output_file}..."
+      curl -L --fail -C - --retry "$retry_count" --retry-all-errors --output "${output_file}" "${shard_url}"
+
+      if [[ -z "$first_output_file" ]]; then
+        first_output_file="$output_file"
+      fi
+
+      downloaded_files+=("$output_file")
+    done
+
+    if (( merge_shards )); then
+      if ! merge_tool="$(choose_merge_tool "${downloaded_files[@]}")"; then
+        return 1
+      fi
+      echo "Merging shards into ${merged_output_file}..."
+      echo "Using merge tool: ${merge_tool}"
+      "$merge_tool" --merge "$first_output_file" "$merged_output_file"
+      echo "Deleting shard files..."
+      rm -- "${downloaded_files[@]}"
+    fi
+  elif [[ "$file_name" =~ \.gguf$ ]]; then
+    output_file="$dest_dir/$file_name"
+
+    if (( user_prefix )); then
+      output_file="$dest_dir/${user_name}:${file_name}"
+    fi
+
+    echo "Downloading ${file_name} -> ${output_file}..."
+    curl -L --fail -C - --retry "$retry_count" --retry-all-errors --output "${output_file}" "${url}"
+
+    if (( merge_shards )); then
+      echo "--merge ignored for unsharded GGUF: ${output_file}"
+    fi
+  else
+    echo "Could not parse GGUF filename from URL:" >&2
+    echo "  $url" >&2
+    echo "Expected filename ending in .gguf or like model-00001-of-00004.gguf" >&2
+    return 1
+  fi
+}
+
+if ! [[ "$retry_count" =~ ^[0-9]+$ ]]; then
+  echo "HF_GGUF_SHARDS_RETRY must be a non-negative integer" >&2
+  exit 1
+fi
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --user-prefix)
+      user_prefix=1
+      shift
+      ;;
+    --no-user-prefix)
+      user_prefix=0
+      shift
+      ;;
+    --dest)
+      if [[ $# -lt 2 ]]; then
+        echo "Missing argument for --dest" >&2
+        usage
+        exit 1
+      fi
+      dest_dir="$2"
+      shift 2
+      ;;
+    --merge)
+      merge_shards=1
+      shift
+      ;;
+    --help|-h)
+      usage
+      exit 0
+      ;;
+    --*)
+      echo "Unknown option: $1" >&2
+      usage
+      exit 1
+      ;;
+    *)
+      break
+      ;;
+  esac
+done
+
+if [[ $# -lt 1 ]]; then
+  usage
+  exit 1
+fi
+
+mkdir -p -- "$dest_dir"
+
+for url in "$@"; do
+  process_url "$url"
+done
